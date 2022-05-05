@@ -42,7 +42,7 @@ class UserPolicy
     public function create(User $user)
     {
         //
-        return $user->email === 'decrooskoenraad@gmail.com';
+        return $user->is_admin === 1;
     }
 
     /**

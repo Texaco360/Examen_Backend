@@ -11,8 +11,12 @@
             <li>
                 <NavLink href="/tasks" :active="$page.component == 'Tasks'">Tasks</NavLink>
             </li>
-            <li>
+            <li v-if="$page.props.auth != null">
                 <NavLink method="post" href="/logout">Log Out</NavLink>
+            </li>
+            <li v-else class="space-x-4">
+                <NavLink href="/login">Log In</NavLink>
+                <NavLink href="/register" >Registreer</NavLink>
             </li>
         </ul>
     </nav>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TasksController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -8,14 +9,29 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('login',[LoginController::class,'create'])->name('login');
-Route::post('login',[LoginController::class,'store']);
+Route::get('login',[LoginController::class,'create'])->name('login')->middleware('guest');
+Route::post('login',[LoginController::class,'store'])->middleware('guest');
 Route::post('logout',[LoginController::class,'destroy'])->middleware('auth');
+Route::get('register',[RegisterController::class,'create'])->middleware('guest');
+Route::post('register',[RegisterController::class,'store'])->middleware('guest');
+
+//Route::post('register', function () {
+//    $data = Request::validate([
+//        'name' => 'required',
+//        'email' => ['required', 'email'],
+//        'password' => 'required',
+//    ]);
+//    dd($data);
+//
+//    User::create($data);
+//    return redirect('/users');
+//
+//});
 
 Route::resource('tasks',TasksController::class);
 
 
-Route::middleware('auth')->group(function () {
+
 
     Route::get('/', function () {
         return Inertia::render('Home');
@@ -35,14 +51,14 @@ Route::middleware('auth')->group(function () {
                 ]),
             'filters' => Request::only(['search']),
             'can' => [
-                'createUser' => Auth::user()->can('create',User::class)
+                'createUser' => Auth::user() ? Auth::user()->can('create',User::class) : false,
             ],
         ]);
     });
 
     Route::get('/users/create', function () {
         return Inertia::render('Users/Create');
-    })->middleware('can:create,App\Models\User');
+    })->middleware('admin');
 
     Route::post('/users', function () {
         $data = Request::validate([
@@ -60,4 +76,4 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Settings');
     });
 
-});
+

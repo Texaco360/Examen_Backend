@@ -14,7 +14,7 @@
                 <h1 class="font-bold text-lg">
                     My App
                 </h1>
-                <p class="text-sm ml-4">
+                <p v-if="$page.props.auth != null" class="text-sm ml-4">
                     Welcome Back! {{ username }}
                 </p>
 

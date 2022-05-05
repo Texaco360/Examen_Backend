@@ -19,11 +19,19 @@ class DatabaseSeeder extends Seeder
             'name'=>'Koenraad',
             'email'=>'decrooskoenraad@gmail.com',
             'password'=>bcrypt('12345678'),
+            'is_admin'=>1,
         ]);
         DB::table('users')->insert([
             'name'=>'Trees',
             'email'=>'trees@gmail.com',
             'password'=>bcrypt('87654321'),
+            'is_admin'=>0,
+        ]);
+        DB::table('users')->insert([
+            'name'=>'Tom',
+            'email'=>'Tom@gmail.com',
+            'password'=>bcrypt('Hallo123'),
+            'is_admin'=>1,
         ]);
 
         \App\Models\User::factory(10)->create();

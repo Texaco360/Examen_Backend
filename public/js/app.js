@@ -109,6 +109,16 @@ var map = {
 		"/js/vendor",
 		"resources_js_Pages_Auth_Login_vue"
 	],
+	"./Auth/Register": [
+		"./resources/js/Pages/Auth/Register.vue",
+		"/js/vendor",
+		"resources_js_Pages_Auth_Register_vue"
+	],
+	"./Auth/Register.vue": [
+		"./resources/js/Pages/Auth/Register.vue",
+		"/js/vendor",
+		"resources_js_Pages_Auth_Register_vue"
+	],
 	"./Home": [
 		"./resources/js/Pages/Home.vue",
 		"/js/vendor",

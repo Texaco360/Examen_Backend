@@ -49,4 +49,10 @@ class User extends Authenticatable
     public function Tasks(){
         return $this->hasMany(Task::class);
     }
+
+    public function isAdmin(){
+        if($this->is_admin === 1){
+            return true;
+        }
+    }
 }
