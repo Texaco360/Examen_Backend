@@ -5,7 +5,7 @@
                 <NavLink href="/" :active="$page.component == 'Home'" >Home</NavLink>
             </li>
 
-            <li>
+            <li v-if="$page.props.auth != null ? $page.props.auth.user.is_admin : false">
                 <NavLink href="/users" :active="$page.component == 'Users'" >Users</NavLink>
             </li>
             <li>

@@ -19,48 +19,13 @@ Route::post('register',[RegisterController::class,'store'])->middleware('guest')
 Route::resource('tasks',TasksController::class)->except('index')->middleware('auth');
 Route::get('tasks',[TasksController::class,'index']);
 
+//Home
+Route::get('/', function () {return Inertia::render('Home');});
 
-    Route::get('/', function () {
-        return Inertia::render('Home');
-    });
+//Admin
+Route::resource('users',\App\Http\Controllers\UserController::class)->middleware('admin');
 
-    Route::get('/users', function () {
-        return Inertia::render('Users/Index', [
-            'users' => User::query()
-                ->when(Request::input('search'), function ($query, $search) {
-                    $query->where('name', 'like', '%' . $search . '%');
-                })
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn($user) => [
-                    'id' => $user->id,
-                    'name' => $user->name
-                ]),
-            'filters' => Request::only(['search']),
-            'can' => [
-                'createUser' => Auth::user() ? Auth::user()->can('create',User::class) : false,
-            ],
-        ]);
-    });
 
-    Route::get('/users/create', function () {
-        return Inertia::render('Users/Create');
-    })->middleware('admin');
 
-    Route::post('/users', function () {
-        $data = Request::validate([
-            'name' => 'required',
-            'email' => ['required', 'email'],
-            'password' => 'required',
-        ]);
-
-        User::create($data);
-        return redirect('/users');
-
-    });
-
-    Route::get('/settings', function () {
-        return Inertia::render('Settings');
-    });
 
 
