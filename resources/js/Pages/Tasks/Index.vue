@@ -13,27 +13,32 @@
             <h1 class="text-3xl ">Tasks</h1>
         </div>
     </div>
-    <form @submit.prevent="submit" class="flex max-w-3xl mx-auto items-center justify-between space-x-4">
-        <div class="mb-6 w-full">
-            <input v-model="form.name"
-                   class="border border-gray-400 p-2 w-full"
-                   type="text"
-                   name="name"
-                   id="name"
-                   placeholder="Add New Task"
-                   required
-            >
-            <div v-if="form.errors.name" v-text="form.errors.name" class="text-red-500 text-xs mt-1"></div>
-        </div>
-        <div class="mb-6">
-            <button type="submit"
-                    class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500"
-                    :disabled="form.processing"
-            >Add
-            </button>
-        </div>
-    </form>
+    <div v-if="$page.props.auth != null">
+        <form @submit.prevent="submit" class="flex max-w-3xl mx-auto items-center justify-between space-x-4">
+            <div class="mb-6 w-full">
+                <input v-model="form.name"
+                       class="border border-gray-400 p-2 w-full"
+                       type="text"
+                       name="name"
+                       id="name"
+                       placeholder="Add New Task"
+                       required
+                >
+                <div v-if="form.errors.name" v-text="form.errors.name" class="text-red-500 text-xs mt-1"></div>
+            </div>
+            <div class="mb-6">
+                <button type="submit"
+                        class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500"
+                        :disabled="form.processing"
+                >Add
+                </button>
+            </div>
+        </form>
+    </div>
+    <div v-else class="max-w-3xl mx-auto bg-orange-500 rounded-3 my-4">
+       <p class="p-3">Log in to add tasks</p>
 
+    </div>
     <!-- component -->
     <!-- This is an example component -->
     <div class="max-w-3xl mx-auto">
@@ -47,7 +52,7 @@
 
                                 <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">{{task.name}}</td>
                                 <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">{{task.owner}}</td>
-                                <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
+                                <td v-if="task.can.deleteTask" class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
                                     <Link method="delete" :href="`/tasks/${task.id}`" class="text-blue-600 dark:text-blue-500 hover:underline">Delete</Link>
                                 </td>
                             </tr>
@@ -89,7 +94,11 @@ export default {
 
     methods :{
         submit(){
-            this.form.post('/tasks')
+            this.form.post('/tasks',{
+                onSuccess: ()=> form.reset('name')
+            })
+            this.form.name ='';
+
         }
     },
 }

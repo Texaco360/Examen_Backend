@@ -23,8 +23,13 @@ class TasksController extends Controller
                     'id' => $task->id,
                     'name' => $task->name,
                     'owner' => $task->user->name,
-                    'owner_id' => $task->user->id
-                ])
+                    'owner_id' => $task->user->id,
+                    'can' => [
+                        'deleteTask' => Auth::user() ? Auth::user()->can('delete',$task): false
+                    ]
+
+                ]),
+
         ]);
 
     }
@@ -104,8 +109,11 @@ class TasksController extends Controller
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
-        $task->delete();
 
+        $this->authorize('delete',$task);
+        $task->delete();
         return redirect('/tasks');
     }
+
+
 }

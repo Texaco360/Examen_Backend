@@ -15,22 +15,9 @@ Route::post('logout',[LoginController::class,'destroy'])->middleware('auth');
 Route::get('register',[RegisterController::class,'create'])->middleware('guest');
 Route::post('register',[RegisterController::class,'store'])->middleware('guest');
 
-//Route::post('register', function () {
-//    $data = Request::validate([
-//        'name' => 'required',
-//        'email' => ['required', 'email'],
-//        'password' => 'required',
-//    ]);
-//    dd($data);
-//
-//    User::create($data);
-//    return redirect('/users');
-//
-//});
-
-Route::resource('tasks',TasksController::class);
-
-
+//tasks
+Route::resource('tasks',TasksController::class)->except('index')->middleware('auth');
+Route::get('tasks',[TasksController::class,'index']);
 
 
     Route::get('/', function () {
