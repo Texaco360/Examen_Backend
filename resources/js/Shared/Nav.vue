@@ -9,7 +9,7 @@
                 <NavLink href="/users" :active="$page.component == 'Users'" >Users</NavLink>
             </li>
             <li>
-                <NavLink href="/settings" :active="$page.component == 'Settings'" >Settings</NavLink>
+                <NavLink href="/tasks" :active="$page.component == 'Tasks'">Tasks</NavLink>
             </li>
             <li>
                 <NavLink method="post" href="/logout">Log Out</NavLink>

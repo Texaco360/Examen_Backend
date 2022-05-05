@@ -20,6 +20,13 @@ class DatabaseSeeder extends Seeder
             'email'=>'decrooskoenraad@gmail.com',
             'password'=>bcrypt('12345678'),
         ]);
-        \App\Models\User::factory(100)->create();
+        DB::table('users')->insert([
+            'name'=>'Trees',
+            'email'=>'trees@gmail.com',
+            'password'=>bcrypt('87654321'),
+        ]);
+
+        \App\Models\User::factory(10)->create();
+        \App\Models\Task::factory(10)->create();
     }
 }

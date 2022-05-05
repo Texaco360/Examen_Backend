@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\TasksController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
@@ -10,6 +11,8 @@ use Inertia\Inertia;
 Route::get('login',[LoginController::class,'create'])->name('login');
 Route::post('login',[LoginController::class,'store']);
 Route::post('logout',[LoginController::class,'destroy'])->middleware('auth');
+
+Route::resource('tasks',TasksController::class);
 
 
 Route::middleware('auth')->group(function () {

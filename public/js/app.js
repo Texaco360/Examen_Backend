@@ -129,6 +129,16 @@ var map = {
 		"/js/vendor",
 		"resources_js_Pages_Settings_vue"
 	],
+	"./Tasks/Index": [
+		"./resources/js/Pages/Tasks/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Tasks_Index_vue"
+	],
+	"./Tasks/Index.vue": [
+		"./resources/js/Pages/Tasks/Index.vue",
+		"/js/vendor",
+		"resources_js_Pages_Tasks_Index_vue"
+	],
 	"./Users/Create": [
 		"./resources/js/Pages/Users/Create.vue",
 		"/js/vendor",
